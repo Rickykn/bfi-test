@@ -6,9 +6,9 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
-// const { sequelize } = require("./lib/sequelize");
+const { sequelize } = require("./lib/sequelize");
 
-// sequelize.sync({ alter: true });
+sequelize.sync({ alter: true });
 
 const app = express();
 

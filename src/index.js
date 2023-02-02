@@ -7,7 +7,7 @@ dotenv.config();
 const PORT = process.env.PORT;
 
 const { sequelize } = require("./lib/sequelize");
-const { userRoutes } = require("./routes");
+const { userRoutes, bookRoutes } = require("./routes");
 
 sequelize.sync({ alter: true });
 
@@ -20,7 +20,10 @@ app.get("/", (req, res) => {
   res.send("<h1>BFI TEST</h1>");
 });
 
+app.use("/cover_url", express.static(`${__dirname}/public/cover`));
+
 app.use("/users", userRoutes);
+app.use("/books", bookRoutes);
 
 app.listen(PORT, () => {
   console.log("Listening in port", PORT);

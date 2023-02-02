@@ -6,11 +6,11 @@ const Book = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Description: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Quantity: {
+    quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -18,7 +18,7 @@ const Book = (sequelize) => {
       type: DataTypes.STRING,
     },
     author: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   });

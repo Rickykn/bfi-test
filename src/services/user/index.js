@@ -3,6 +3,7 @@ const { User } = require("../../lib/sequelize");
 const Service = require("../service");
 const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
 
 class UserService extends Service {
   static register = async (req) => {
@@ -84,6 +85,74 @@ class UserService extends Service {
           user: findUser,
           token,
         },
+      });
+    } catch (err) {
+      console.log(err);
+      return this.handleError({
+        message: "Server Error",
+        statusCode: 500,
+      });
+    }
+  };
+
+  static editUser = async (req) => {
+    try {
+      const { name } = req.body;
+      const { token } = req;
+
+      if (!req.body) {
+        return this.handleError({
+          message: "Bad request",
+          statusCode: 500,
+        });
+      }
+
+      const uploadFileDomain = process.env.UPLOAD_FILE_DOMAIN;
+      const filePath = "profile_images";
+      const filename = req.file?.filename;
+
+      await User.update(
+        {
+          name,
+          profile_picture: req.file
+            ? `${uploadFileDomain}/${filePath}/${filename}`
+            : undefined,
+        },
+        {
+          where: { id: token.id },
+        }
+      );
+
+      const newDataUser = await User.findByPk(token.id);
+
+      return this.handleSuccess({
+        message: "Edited Post",
+        statusCode: 200,
+        data: newDataUser,
+      });
+    } catch (err) {
+      console.log(err);
+      fs.unlinkSync(
+        __dirname + "/../public/profile-picture/" + req.file.filename
+      );
+      return this.handleError({
+        message: "Server Error",
+        statusCode: 500,
+      });
+    }
+  };
+
+  static deleteUserById = async (req) => {
+    try {
+      const { id } = req.params;
+      await User.destroy({
+        where: {
+          id,
+        },
+      });
+      return this.handleSuccess({
+        message: "Deleted Success",
+        statusCode: 200,
       });
     } catch (err) {
       console.log(err);

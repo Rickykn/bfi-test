@@ -32,6 +32,37 @@ const userController = {
       });
     }
   },
+
+  editUser: async (req, res) => {
+    try {
+      const serviceResult = await UserService.editUser(req);
+      if (!serviceResult.success) throw serviceResult;
+      return res.status(serviceResult.statusCode || 200).json({
+        message: serviceResult.message,
+        result: serviceResult.data,
+      });
+    } catch (err) {
+      return res.status(err.statusCode || 500).json({
+        message: err.message,
+      });
+    }
+  },
+
+  deleteUser: async (req, res) => {
+    try {
+      const serviceResult = await UserService.deleteUserById(req);
+
+      if (!serviceResult.success) throw serviceResult;
+
+      return res.status(serviceResult.statusCode || 200).json({
+        message: serviceResult.message,
+      });
+    } catch (err) {
+      return res.status(err.statusCode || 500).json({
+        message: err.message,
+      });
+    }
+  },
 };
 
 module.exports = userController;

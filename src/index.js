@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/cover_url", express.static(`${__dirname}/public/cover`));
+app.use(
+  "/profile_images",
+  express.static(`${__dirname}/public/profile-picture`)
+);
 
 app.use("/users", userRoutes);
 app.use("/books", bookRoutes);

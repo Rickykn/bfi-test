@@ -3,8 +3,9 @@
 # HOW TO RUN PROJECT
 
 1. npm install
-2. create and setup .env
-3. npm start
+2. Create database with mysql
+3. create and setup .env
+4. npm start
 
 # ENV SETUP
 

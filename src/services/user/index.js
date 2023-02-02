@@ -162,6 +162,32 @@ class UserService extends Service {
       });
     }
   };
+
+  static getUserById = async (req) => {
+    try {
+      const { token } = req;
+
+      const data = await User.findByPk(token.id);
+
+      if (!data) {
+        return this.handleError({
+          message: "User Not Found",
+          statusCode: 400,
+        });
+      }
+
+      return this.handleSuccess({
+        message: "User Found",
+        statusCode: 200,
+        data: data,
+      });
+    } catch (err) {
+      return this.handleError({
+        message: "Server Error",
+        statusCode: 500,
+      });
+    }
+  };
 }
 
 module.exports = UserService;

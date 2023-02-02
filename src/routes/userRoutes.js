@@ -18,5 +18,6 @@ router.patch(
 );
 
 router.delete("/:id", userController.deleteUser);
+router.get("/", authorizedLoggedInUser, userController.getUserById);
 
 module.exports = router;

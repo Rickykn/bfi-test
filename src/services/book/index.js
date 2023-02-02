@@ -44,6 +44,89 @@ class BookService extends Service {
       });
     }
   };
+
+  static getAllBook = async (req) => {
+    try {
+      const findBooks = await Book.findAll();
+
+      if (!findBooks) {
+        return this.handleError({
+          message: "Book not found",
+          statusCode: 404,
+        });
+      }
+
+      return this.handleSuccess({
+        message: "Success get books",
+        statusCode: 200,
+        data: findBooks,
+      });
+    } catch (err) {
+      console.log(err);
+      this.handleError({
+        message: "Server Error",
+        statusCode: 500,
+      });
+    }
+  };
+
+  static deleteBookById = async (req) => {
+    try {
+      const { id } = req.params;
+      await Book.destroy({
+        where: {
+          id,
+        },
+      });
+      return this.handleSuccess({
+        message: "Deleted Success",
+        statusCode: 200,
+      });
+    } catch (err) {
+      console.log(err);
+      return this.handleError({
+        message: "Server Error",
+        statusCode: 500,
+      });
+    }
+  };
+
+  static editBook = async (req) => {
+    try {
+      const { description, quantity } = req.body;
+      const { id } = req.params;
+
+      const findBook = await Book.findByPk(id);
+
+      if (!findBook) {
+        return this.handleError({
+          message: "Book not found",
+          statusCode: 404,
+        });
+      }
+
+      await Book.update(
+        {
+          description,
+          quantity,
+        },
+        {
+          where: { id },
+        }
+      );
+
+      return this.handleSuccess({
+        message: "Book Edited",
+        statusCode: 200,
+      });
+    } catch (err) {
+      console.log(err);
+      return this.handleError({
+        message: "Server Error",
+        statusCode: 500,
+      });
+    }
+  };
 }
 
 module.exports = BookService;

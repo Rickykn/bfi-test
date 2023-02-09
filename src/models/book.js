@@ -4,6 +4,10 @@ const Book = (sequelize) => {
   return sequelize.define(
     "Book",
     {
+      code_product: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,

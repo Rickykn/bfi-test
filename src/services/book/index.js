@@ -1,3 +1,5 @@
+const moment = require("moment");
+const getRandomPin = require("../../lib/generateCode");
 const { Book } = require("../../lib/sequelize");
 const Service = require("../service");
 
@@ -19,6 +21,11 @@ class BookService extends Service {
         });
       }
 
+      const dateFormat = moment().format("YYYYMMDD");
+      const number = getRandomPin();
+
+      const product_code = `BK-${number}-${dateFormat}`;
+
       const uploadFileDomain = process.env.UPLOAD_FILE_DOMAIN;
       const filePath = "cover_url";
       const { filename } = req.file;
@@ -29,6 +36,7 @@ class BookService extends Service {
         description,
         quantity,
         author,
+        code_product: product_code,
       });
 
       return this.handleSuccess({

@@ -1,4 +1,5 @@
 const UserService = require("../services/user");
+const logger = require("../lib/logger");
 
 const userController = {
   register: async (req, res) => {
@@ -7,11 +8,14 @@ const userController = {
 
       if (!serviceResult.success) throw serviceResult;
 
+      logger.logger.log("info", serviceResult.message);
+
       return res.status(serviceResult.statusCode || 201).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -22,11 +26,15 @@ const userController = {
     try {
       const serviceResult = await UserService.login(req);
       if (!serviceResult.success) throw serviceResult;
+
+      logger.logger.log("info", serviceResult.message);
+
       return res.status(serviceResult.statusCode || 200).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -37,11 +45,13 @@ const userController = {
     try {
       const serviceResult = await UserService.editUser(req);
       if (!serviceResult.success) throw serviceResult;
+      logger.logger.log("info", serviceResult.message);
       return res.status(serviceResult.statusCode || 200).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -53,11 +63,12 @@ const userController = {
       const serviceResult = await UserService.deleteUserById(req);
 
       if (!serviceResult.success) throw serviceResult;
-
+      logger.logger.log("info", serviceResult.message);
       return res.status(serviceResult.statusCode || 200).json({
         message: serviceResult.message,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -70,11 +81,14 @@ const userController = {
 
       if (!serviceResult.success) throw serviceResult;
 
+      logger.logger.log("info", serviceResult.message);
+
       return res.status(serviceResult.statusCode || 200).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });

@@ -16,6 +16,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// app.use(logger());
+
 app.get("/", (req, res) => {
   res.send("<h1>BFI TEST</h1>");
 });

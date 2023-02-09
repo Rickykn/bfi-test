@@ -2,14 +2,14 @@ const request = require("supertest");
 
 const app = require("../index");
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InJpY2t5eWtuIiwiaWF0IjoxNjc1MzM1MDMxLCJleHAiOjE2NzUzNzEwMzF9.aEudbkR1cND3gVRAXCd2r0YnXbcsgGk9hrhMmEJRJRA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6ImdhbGFuZyIsImlhdCI6MTY3NTkxNjYwOCwiZXhwIjoxNjc1OTUyNjA4fQ.NxPaq3UlmB55he9E4J6dXSlVoaUNKIcL8Ko25bpG_JE";
 
 const token2 =
-  "eyJhbGciOiJzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InJpY2t5eWtuIiwiaWF0IjoxNjc1MzM1MDMxLCJleHAiOjE2NzUzNzEwMzF9.aEudbkR1cND3gVRAXCd2r0YnXbcsgGk9hrhMmEJRJRA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtZSI6ImdhbGFuZyIsImlhdCI6MTY3NTkxNjYwOCwhwIjoxNjc1OTUyNjA4fQ.NxPaq3UlmB55he9E4J6dXSlVoaUNKIcL8Ko25bpG_JE";
 
 const payloadLogin = {
-  credential: "rickykurniawan350@gmail.com",
-  password: "Password1",
+  credential: "galang",
+  password: "Password12",
 };
 
 const payloadEditBook = {
@@ -50,21 +50,21 @@ describe("product", () => {
   });
   it("return delete product success", async () => {
     const res = await request(app)
-      .delete(`/books/` + 2)
+      .delete(`/books/` + 5)
       .set({ Authorization: token })
       .expect(200);
   });
 
-  it("return delete product success", async () => {
-    const res = await request(app)
-      .delete(`/books/` + 2)
-      .set({ Authorization: token })
-      .expect(200);
-  });
+  // it("return delete product success", async () => {
+  //   const res = await request(app)
+  //     .delete(`/books/` + 5)
+  //     .set({ Authorization: token })
+  //     .expect(200);
+  // });
 
   it("return edit book ", async () => {
     const res = await request(app)
-      .patch("/books/" + 7)
+      .patch("/books/" + 6)
       .send(payloadEditBook)
       .set({ Authorization: token })
       .set("Content-Type", "application/json")

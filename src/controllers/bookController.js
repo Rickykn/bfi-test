@@ -1,4 +1,5 @@
 const BookService = require("../services/book");
+const logger = require("../lib/logger");
 
 const bookController = {
   createNewBook: async (req, res) => {
@@ -7,11 +8,14 @@ const bookController = {
 
       if (!serviceResult.success) throw serviceResult;
 
+      logger.logger.log("info", "successfully create new book");
+
       return res.status(serviceResult.statusCode || 201).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -24,11 +28,14 @@ const bookController = {
 
       if (!serviceResult.success) throw serviceResult;
 
+      logger.logger.log("info", "success get all book");
+
       return res.status(serviceResult.statusCode || 201).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -41,11 +48,14 @@ const bookController = {
 
       if (!serviceResult.success) throw serviceResult;
 
+      logger.logger.log("info", "success delete one book");
+
       return res.status(serviceResult.statusCode || 201).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
@@ -58,11 +68,14 @@ const bookController = {
 
       if (!serviceResult.success) throw serviceResult;
 
+      logger.logger.log("info", serviceResult.message);
+
       return res.status(serviceResult.statusCode || 201).json({
         message: serviceResult.message,
         result: serviceResult.data,
       });
     } catch (err) {
+      logger.logger.log("error", err.message);
       return res.status(err.statusCode || 500).json({
         message: err.message,
       });
